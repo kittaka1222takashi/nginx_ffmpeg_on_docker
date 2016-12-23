@@ -1,0 +1,22 @@
+version: '2'
+services:
+  nginx:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile_nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "1935:1935"
+    volumes:
+      - ./:/usr/local/nginx/html
+
+  ffmpeg:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile_ffmpeg
+    container_name: ffmpeg
+    environment:
+      - TARGET_RTMP_IP=rtmp://192.168.0.7:1935
+    links:
+      - nginx

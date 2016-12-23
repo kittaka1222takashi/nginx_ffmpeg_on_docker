@@ -1,0 +1,8 @@
+FROM jrottenberg/ffmpeg:3.2-centos
+
+COPY BigBuckBunny.mp4 ./
+COPY start.sh ./
+
+COPY ./ffserver.conf /etc/ffserver.conf
+EXPOSE 80 1935
+ENTRYPOINT bash start.sh
