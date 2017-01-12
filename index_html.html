@@ -13,10 +13,6 @@
 </head>
 <body>
   <div>
-    <h2>RTMP</h2>
-    <div id="rtmp_player_flv"></div>
-  </div>
-  <div>
     <h2>HTTP Live Streaming</h2>
     <div id="hls_player"></div>
   </div>
@@ -28,35 +24,15 @@
         $("#vinfo").text(api.engine.engineName + " engine playing " + video.type);
       });
     });
-    var rtmp_player_flv = document.getElementById("rtmp_player_flv");
-    flowplayer(rtmp_player_flv, {
-      autoplay : true,
-      swf: "//releases.flowplayer.org/6.0.5/commercial/flowplayer.swf",
-      swfHls: "//releases.flowplayer.org/6.0.5/commercial/flowplayerhls.swf",
-      key: "$863732616083910",
-      brand: {
-        showOnOrigin: true,
-        text: "NttCom"
-      },
-      embed: false,
-      clip: {
-        sources: [
-          {
-            type: "video/flash",
-            rtmpt : false,
-            src:  "rtmp://192.168.0.8:1935/live/mdst"
-          },
-        ]
-      }
-      // rtmp: {
-
-      // },
-      // swf : "",
-    });
     var hls_player = document.getElementById("hls_player");
     flowplayer(hls_player,{
       autoplay : true,
       live : true,
+      embed: false,
+      hlsjs: {
+        // slightly better behaviour for this problem stream
+        smoothSwitching: false
+      },
       swf: "//releases.flowplayer.org/6.0.5/commercial/flowplayer.swf",
       swfHls: "//releases.flowplayer.org/6.0.5/commercial/flowplayerhls.swf",
       key: "$863732616083910",
@@ -64,22 +40,20 @@
         showOnOrigin: true,
         text: "NttCom"
       },
-      embed: false,
       clip: {
         live : true,
         sources: [
           {
             live : true,
             type: "application/x-mpegurl",
-            src:  "http://192.168.0.8/hls/mdst.m3u8",
-            // src:  "http://wms.shared.streamshow.it/carinatv/carinatv/playlist.m3u8"
+            src:  "http://192.168.0.8/hls/mdst.m3u8"
+            // src: "//nasatv-lh.akamaihd.net/i/NASA_101@319270/master.m3u8",
           },
         ]
         // flashls : {
 
         // }
       },
-      // swfHls : ""
     });
   </script>
 </body>
