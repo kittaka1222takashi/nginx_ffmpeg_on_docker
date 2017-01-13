@@ -2,84 +2,36 @@
 <html lang="en" class="">
 <head>
   <!-- flow player -->
-  <link rel="stylesheet" href="//releases.flowplayer.org/6.0.5/skin/minimalist.css">
-  <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
-  <script src="//releases.flowplayer.org/6.0.5/commercial/flowplayer.min.js"></script>
-  <!-- <script src="//releases.flowplayer.org/6.0.5/flowplayer.min.js"></script> -->
-  <!-- load the Flowplayer hlsjs engine, including hls.js -->
-  <script src="//releases.flowplayer.org/hlsjs/flowplayer.hlsjs.min.js"></script>
-  <!-- optional: the quality selector plugin for quality selection when hlsjs is not supported -->
-  <script src="//releases.flowplayer.org/quality-selector/flowplayer.quality-selector.min.js"></script>
+  <script type="text/javascript" src="././flowplayer/flowplayer-3.2.13.min.js"></script>
 </head>
 <body>
   <div>
-    <h2>RTMP</h2>
-    <div id="rtmp_player_flv"></div>
-  </div>
-  <div>
     <h2>HTTP Live Streaming</h2>
-    <div id="hls_player"></div>
+    <div id="hls_player"  style="display:block;width:425px;height:300px;"></div>
   </div>
-  <p id="vinfo" class="info">&nbsp;</p>
 
-  <script type="text/javascript">
-    flowplayer(function (api) {
-      api.on("load", function (e, api, video) {
-        $("#vinfo").text(api.engine.engineName + " engine playing " + video.type);
-      });
-    });
-    var rtmp_player_flv = document.getElementById("rtmp_player_flv");
-    flowplayer(rtmp_player_flv, {
-      autoplay : true,
-      swf: "//releases.flowplayer.org/6.0.5/commercial/flowplayer.swf",
-      swfHls: "//releases.flowplayer.org/6.0.5/commercial/flowplayerhls.swf",
-      key: "$863732616083910",
-      brand: {
-        showOnOrigin: true,
-        text: "NttCom"
-      },
-      embed: false,
-      clip: {
-        sources: [
-          {
-            type: "video/flash",
-            rtmpt : false,
-            src:  "rtmp://192.168.0.8:1935/live/mdst"
-          },
-        ]
-      }
-      // rtmp: {
-
-      // },
-      // swf : "",
-    });
+  <script type="text/javascript" language="JavaScript">
     var hls_player = document.getElementById("hls_player");
-    flowplayer(hls_player,{
-      autoplay : true,
-      live : true,
-      swf: "//releases.flowplayer.org/6.0.5/commercial/flowplayer.swf",
-      swfHls: "//releases.flowplayer.org/6.0.5/commercial/flowplayerhls.swf",
-      key: "$863732616083910",
-      brand: {
-        showOnOrigin: true,
-        text: "NttCom"
+    $f(hls_player, {
+      wmode: "direct",
+      src: "./flowplayer/flowplayer.commercial-3.2.18.swf"
+    }, {
+      plugins: {
+        flashls: {
+          // load the flashls plugin
+          url: "./flowplayer/flashlsFlowPlayer-0.4.4.22.swf",
+          hls_maxbufferlength: 20
+        }
       },
-      embed: false,
       clip: {
-        live : true,
-        sources: [
-          {
-            live : true,
-            type: "application/x-mpegurl",
-            src:  "http://192.168.0.8/hls/mdst.m3u8",
-            // src:  "http://wms.shared.streamshow.it/carinatv/carinatv/playlist.m3u8"
-          },
-        ]
-        // flashls : {
-
-        // }
-      },
-      // swfHls : ""
+        url: "hls/mdst.m3u8",
+        live: true,
+        provider: "flashls",
+        urlResolvers: "flashls",
+        accelerated: true,
+ 
+        scaling: "fit"
+      }
     });
   </script>
 </body>
